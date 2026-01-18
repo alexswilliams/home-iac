@@ -93,6 +93,7 @@ table ip router {
 
   chain from-monitoring-rules {
     oif $IF_EXTERNAL accept;
+    oif $IF_IOT accept;
     accept;
   }
 

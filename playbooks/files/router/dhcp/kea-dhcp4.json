@@ -415,12 +415,12 @@
           {
             "hostname": "l900-bookshelf-strip",
             "hw-address": "6c:5a:b0:32:47:0f",
-            "ip-address": "192.168.5.52"
+            "ip-address": "192.168.5.51"
           },
           {
             "hostname": "p110-bookshelf-ball-lights",
             "hw-address": "28:87:ba:c8:cd:ed",
-            "ip-address": "192.168.5.53"
+            "ip-address": "192.168.5.52"
           },
           {
             "hostname": "hs110-work-desk-power",
