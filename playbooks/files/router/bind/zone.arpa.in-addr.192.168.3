@@ -1,0 +1,15 @@
+$TTL 10m
+@ IN SOA router-pi.work.local. hostmaster.local. (
+  2026011801  ; serial
+  1m          ; secondary server refresh interval
+  1m          ; secondary sever retry interval
+  365d        ; secondary server expire-on-split-brain duratoin
+  10          ; nxdomain cache time
+)
+
+      IN  NS    router-pi.work.local.
+
+2     IN  PTR   router-pi.work.local.
+10    IN  PTR   m1-wifi.work.local.
+11    IN  PTR   dock-wired.work.local.
+12    IN  PTR   thunderbolt-nic.work.local.

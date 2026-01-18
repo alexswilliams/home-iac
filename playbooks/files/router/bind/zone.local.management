@@ -1,0 +1,18 @@
+$TTL 10m
+@ IN SOA router-pi.management.local. hostmaster.local. (
+  2026011801  ; serial
+  1m          ; secondary server refresh interval
+  1m          ; secondary sever retry interval
+  365d        ; secondary server expire-on-split-brain duratoin
+  10          ; nxdomain cache time
+)
+
+  IN NS router-pi.management.local.
+
+router-pi             IN  A     192.168.0.2
+top-switch            IN  A     192.168.0.10
+work-desk-switch      IN  A     192.168.0.11
+media-switch          IN  A     192.168.0.12
+work-ap-902           IN  A     192.168.0.20
+netgear-default-addr  IN  A     192.168.0.239
+dummy-gateway         IN  A     192.168.0.254

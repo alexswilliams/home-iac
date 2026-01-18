@@ -1,0 +1,49 @@
+- name: Debian keyring/archive/https installed
+  ansible.builtin.package:
+    name:
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+    state: present
+- name: ISC Kea Keyring
+  ansible.builtin.get_url:
+    url: "https://dl.cloudsmith.io/public/isc/kea-3-0/gpg.B16C44CD45514C3C.key"
+    dest: /usr/share/keyrings/isc-kea-3-0-archive-keyring.gpg
+    mode: "0644"
+    checksum: "sha256:16c1e9cf97cacbc9258332aac39fe1ad3aee83019a13b24d7f7b079deccf90cd"
+- name: ISC Kea Repo
+  ansible.builtin.get_url:
+    url: "https://dl.cloudsmith.io/public/isc/kea-3-0/config.deb.txt?distro={{ ansible_distribution }}&codename={{ ansible_distribution_release }}&component=main"
+    dest: /etc/apt/sources.list.d/isc-kea-3-0.list
+    mode: "0644"
+  register: isc_kea_repo
+- name: Refresh apt
+  ansible.builtin.apt:
+    update_cache: true
+  when: isc_kea_repo.changed
+
+- name: Package isc-kea
+  ansible.builtin.package:
+    name: isc-kea
+    state: present
+
+- name: DHCP IPv4 Config
+  ansible.builtin.copy:
+    dest: /etc/kea/kea-dhcp4.conf
+    src: files/router/dhcp/kea-dhcp4.json
+    group: root
+    owner: root
+    mode: "0644"
+    validate: "/usr/sbin/kea-dhcp4 -t %s"
+  register: dhcpd_config
+
+- name: DHCP daemon is reloaded when changes made
+  ansible.builtin.service:
+    name: isc-kea-dhcp4-server.service
+    state: restarted
+  when: dhcpd_config.changed
+
+- name: DHCP daemon is enabled on boot
+  ansible.builtin.service:
+    name: isc-kea-dhcp4-server.service
+    enabled: true

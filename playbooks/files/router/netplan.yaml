@@ -1,0 +1,61 @@
+network:
+  version: 2
+  renderer: "networkd"
+
+  ethernets:
+    eth0:
+      match:
+        macaddress: "2c:cf:67:5a:74:6a"
+      dhcp4: false
+      dhcp6: false
+      accept-ra: false
+      addresses: ["192.168.1.2/24"]
+      nameservers:
+        search:
+          - "external.local"
+          - "management.local"
+          - "main.local"
+          - "work.local"
+          - "media.local"
+          - "iot.local"
+          - "monitoring.local"
+          - "guest.local"
+        addresses: ["127.0.0.1", "1.1.1.1", "8.8.8.8"]
+      routes:
+        - to: "default"
+          via: "192.168.1.1"
+          on-link: true
+
+  vlans:
+    eth0.t10-mgmt:
+      id: 10
+      link: eth0
+      addresses: ["192.168.0.2/24"]
+    # vlan11: - this is untagged on eth0
+    #   id: 11
+    #   link: eth0
+    #   addresses: [ "192.168.1.2/24" ]
+    eth0.t12-main:
+      id: 12
+      link: eth0
+      addresses: ["192.168.2.2/24"]
+    eth0.t13-work:
+      id: 13
+      link: eth0
+      addresses: ["192.168.3.2/24"]
+    eth0.t14-media:
+      id: 14
+      link: eth0
+      addresses: ["192.168.4.2/24"]
+    eth0.t15-iot:
+      id: 15
+      link: eth0
+      addresses: ["192.168.5.2/24"]
+    eth0.t16-monitr:
+      id: 16
+      link: eth0
+      addresses: ["192.168.6.2/24"]
+    eth0.t100-guest:
+      id: 100
+      link: eth0
+      addresses: ["192.168.100.2/24"]

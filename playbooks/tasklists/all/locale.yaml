@@ -1,0 +1,12 @@
+- name: Locales package is present
+  ansible.builtin.package:
+    state: present
+    name:
+      - locales
+  when: ansible_facts['os_family'] == 'Debian' or ansible_facts['os_family'] == 'Archlinux'
+
+- name: Generate GB locale
+  community.general.locale_gen:
+    name: en_GB.UTF-8
+    state: present
+  when: ansible_facts['os_family'] == 'Debian' or ansible_facts['os_family'] == 'Archlinux'

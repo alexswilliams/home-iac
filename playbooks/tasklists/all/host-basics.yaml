@@ -1,0 +1,35 @@
+- name: Base system minimal tools are installed
+  ansible.builtin.package:
+    state: present
+    name:
+      - nano
+      - less
+      - htop
+      - lsof
+
+- name: Ensure /usr/bin/python is sane
+  ansible.builtin.file:
+    src: python3
+    dest: /usr/bin/python
+    owner: root
+    group: root
+    state: link
+    force: false
+
+- name: No MotD
+  ansible.builtin.copy:
+    content: ""
+    dest: "/home/{{ ansible_user }}/.hushlogin"
+    force: false
+    mode: "0644"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname_to_set }}"
+  when: hostname_to_set is defined
+
+- name: Set timezone to London
+  ansible.builtin.timezone:
+    name: Europe/London

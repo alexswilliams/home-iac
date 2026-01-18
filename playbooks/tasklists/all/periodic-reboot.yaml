@@ -1,0 +1,9 @@
+- name: Install Reboot Cron
+  ansible.builtin.cron:
+    cron_file: /etc/cron.d/00_reboot
+    user: root
+    name: periodic reboot
+    hour: "6"
+    minute: "{{ nightly_reboot_6am_minute }}"
+    job: /sbin/shutdown -r +1
+  when: nightly_reboot_6am_minute is defined

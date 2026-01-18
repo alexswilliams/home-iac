@@ -1,0 +1,18 @@
+$TTL 10m
+@ IN SOA router-pi.main.local. hostmaster.local. (
+  2026011801  ; serial
+  1m          ; secondary server refresh interval
+  1m          ; secondary sever retry interval
+  365d        ; secondary server expire-on-split-brain duratoin
+  10          ; nxdomain cache time
+)
+
+      IN  NS    router-pi.main.local.
+
+2     IN  PTR   router-pi.main.local.
+10    IN  PTR   desktop-wired.main.local.
+11    IN  PTR   laptop-wired.main.local.
+12    IN  PTR   laptop-wifi.main.local.
+200   IN  PTR   pixel-4.main.local.
+201   IN  PTR   pixel-6.main.local.
+202   IN  PTR   pixel-8.main.local.

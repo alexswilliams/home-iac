@@ -1,0 +1,19 @@
+- name: Default users removed
+  ansible.builtin.user:
+    state: absent
+    name: "{{ item }}"
+  with_items:
+    - alarm
+
+- name: Default users' home dir removed
+  ansible.builtin.file:
+    state: absent
+    path: "/home/{{ item }}"
+  with_items:
+    - alarm
+
+- name: Lock root user
+  ansible.builtin.user:
+    state: present
+    name: root
+    password_lock: true

@@ -1,0 +1,19 @@
+$TTL 10m
+@ IN SOA router-pi.media.local. hostmaster.local. (
+  2026011801  ; serial
+  1m          ; secondary server refresh interval
+  1m          ; secondary sever retry interval
+  365d        ; secondary server expire-on-split-brain duratoin
+  10          ; nxdomain cache time
+)
+
+      IN  NS    router-pi.media.local.
+
+2     IN  PTR   router-pi.media.local.
+10    IN  PTR   amazon-tv-wired.media.local.
+11    IN  PTR   amazon-tv-wifi.media.local.
+12    IN  PTR   chromecast-wired.media.local.
+13    IN  PTR   chromecast-wifi.media.local.
+200   IN  PTR   pixel-4.media.local.
+201   IN  PTR   pixel-6.media.local.
+202   IN  PTR   pixel-8.media.local.

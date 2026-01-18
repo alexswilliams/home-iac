@@ -1,0 +1,87 @@
+- name: Install ansible
+  ansible.builtin.package:
+    state: present
+    name: ansible
+
+- name: Install cron
+  ansible.builtin.package:
+    state: present
+    name:
+      - "{{ item }}"
+  with_items:
+    - "{{ cron_pkg[ansible_facts['os_family']] }}"
+  vars:
+    cron_pkg:
+      Debian: cron
+      Archlinux: cronie
+      RedHat: cronie
+
+- name: Ansible project directory exists
+  ansible.builtin.file:
+    state: directory
+    path: /opt/ansible
+    recurse: false
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ansible local task lists are present
+  ansible.posix.synchronize:
+    delete: true
+    recursive: true
+    src: files/ansible
+    dest: /opt/
+    rsync_opts:
+      - "--exclude=**/inventory.yaml"
+      - "--chmod=D0755,F0644"
+      - "--chown=root:root"
+
+- name: Ansible local inventory is configured
+  ansible.builtin.template:
+    src: files/ansible/inventory.yaml
+    dest: /opt/ansible/inventory.yaml
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Install Ansible Cron (LANG)
+  ansible.builtin.cron:
+    cron_file: /etc/cron.d/00_ansible
+    user: "{{ ansible_user }}"
+    env: true
+    name: LANG
+    job: en_GB.UTF-8
+
+- name: Install Ansible Cron (LC_CTYPE)
+  ansible.builtin.cron:
+    cron_file: /etc/cron.d/00_ansible
+    user: "{{ ansible_user }}"
+    env: true
+    name: LC_CTYPE
+    job: en_GB.UTF-8
+    insertafter: LANG
+
+- name: Remove old job
+  ansible.builtin.cron:
+    cron_file: /etc/cron.d/00_ansible
+    user: "{{ ansible_user }}"
+    name: cron playbook
+    state: absent
+
+- name: Install Key Fetch Cron
+  ansible.builtin.cron:
+    cron_file: /etc/cron.d/00_ansible
+    user: "{{ ansible_user }}"
+    name: fetch ssh pubkey file
+    hour: "1,7,13,19"
+    minute: "5"
+    job: pushd /opt/ansible; ansible-playbook ./playbooks/fetch-keys.yaml
+
+- name: Install Update Cron
+  ansible.builtin.cron:
+    cron_file: /etc/cron.d/00_ansible
+    user: "{{ ansible_user }}"
+    name: update system
+    hour: "21"
+    minute: "11"
+    job: pushd /opt/ansible; ansible-playbook ./playbooks/update.yaml

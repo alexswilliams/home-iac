@@ -1,0 +1,6 @@
+- name: Fetch Keys
+  hosts: localhost
+  become: true
+  tasks:
+    - name: "Fetch Keys"
+      ansible.builtin.include_tasks: ./tasks/fetch-keys.yaml

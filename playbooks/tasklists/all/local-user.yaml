@@ -1,0 +1,61 @@
+- name: Main user exists
+  ansible.builtin.user:
+    state: present
+    name: "{{ ansible_user }}"
+    create_home: true
+    home: "/home/{{ ansible_user }}"
+    shell: /bin/bash
+
+# - name: Main User bashrc is configured
+#   ansible.builtin.copy:
+#     dest: "/home/{{ ansible_user }}/.bashrc"
+#     group: "{{ ansible_user }}"
+#     owner: "{{ ansible_user }}"
+#     mode: "0644"
+#     content: |
+#       export EDITOR=nano
+#       export PAGER=less
+#       export LANG=en_GB.UTF-8
+#       export LC_CTYPE=en_GB.UTF-8
+#       [[ $- != *i* ]] && return
+#       alias ls='ls --color=auto'
+#       PS1='[\u@\h \W]\$ '
+#     validate: "/bin/bash %s"
+
+- name: SSH ControlMasters directory exists
+  ansible.builtin.file:
+    state: directory
+    path: "/home/{{ ansible_user }}/.ssh/controlmasters"
+    recurse: false
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0770"
+
+- name: Main user ssh config is configured
+  ansible.builtin.copy:
+    dest: "/home/{{ ansible_user }}/.ssh/config"
+    group: "{{ ansible_user }}"
+    owner: "{{ ansible_user }}"
+    mode: "0664"
+    content: |
+      Host *
+        ControlPath ~/.ssh/controlmasters/%r@%h:%p
+        ControlMaster auto
+        ControlPersist 2m
+
+- name: ProcPS Config directory exists
+  ansible.builtin.file:
+    state: directory
+    path: "/home/{{ ansible_user }}/.config/procps"
+    recurse: false
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0770"
+
+- name: Main user toprc is configured
+  ansible.builtin.copy:
+    dest: "/home/{{ ansible_user }}/.config/procps/toprc"
+    src: files/toprc
+    group: "{{ ansible_user }}"
+    owner: "{{ ansible_user }}"
+    mode: "0644"

@@ -1,0 +1,28 @@
+- name: Sudo is installed
+  ansible.builtin.package:
+    state: present
+    name: sudo
+
+- name: Sudoers is set up
+  ansible.builtin.copy:
+    dest: /etc/sudoers
+    group: root
+    owner: root
+    mode: "0440"
+    content: |
+      Defaults env_keep += "EDITOR PAGER LANG LANGUAGE LC_*"
+      root  ALL=(ALL) ALL
+      {{ ansible_user }} ALL=(ALL) NOPASSWD: ALL
+    validate: "/usr/sbin/visudo -cf %s"
+
+- name: Remove sudoers directory
+  ansible.builtin.file:
+    state: absent
+    path: /etc/sudoers.d
+
+- name: TEST Root and main user can both sudo successfully
+  ansible.builtin.shell:
+    cmd: "sudo -u {{ ansible_user }} echo test && sudo -u {{ ansible_user }} sudo echo test"
+  register: sudo_works
+  changed_when: false
+  failed_when: sudo_works.rc != 0

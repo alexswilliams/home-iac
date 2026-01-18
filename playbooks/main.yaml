@@ -1,0 +1,48 @@
+# - name: "General Setup"
+#   hosts: "all"
+#   become: true
+#   tasks:
+#     - name: "Host Basics"
+#       ansible.builtin.include_tasks: ./tasklists/all/host-basics.yaml
+#     - name: "Locale"
+#       ansible.builtin.include_tasks: ./tasklists/all/locale.yaml
+#     - name: "Local User Setup"
+#       ansible.builtin.include_tasks: ./tasklists/all/local-user.yaml
+#     - name: "Remove Default Users"
+#       ansible.builtin.include_tasks: ./tasklists/all/remove-default-users.yaml
+#     - name: "Journald"
+#       ansible.builtin.include_tasks: ./tasklists/all/journald.yaml
+#     - name: "Ansible from Cron"
+#       ansible.builtin.include_tasks: ./tasklists/all/ansible-from-cron.yaml
+#     - name: "Periodic Reboot"
+#       ansible.builtin.include_tasks: ./tasklists/all/periodic-reboot.yaml
+#     - name: "Fetch Pubkey File (manual cron run)"
+#       ansible.builtin.include_tasks: ./files/ansible/playbooks/tasks/fetch-keys.yaml
+#     - name: "SSH Daemon"
+#       ansible.builtin.include_tasks: ./tasklists/all/ssh.yaml
+#     - name: "Sudo Config"
+#       ansible.builtin.include_tasks: ./tasklists/all/sudo.yaml
+#     - name: "Sysctl"
+#       ansible.builtin.include_tasks: ./tasklists/all/sysctl.yaml
+
+# - name: "Local Machines Setup"
+#   hosts: "localmachines"
+#   become: true
+#   tasks:
+#     - name: "NTP"
+#       ansible.builtin.include_tasks: ./tasklists/localmachines/ntp.yaml
+#     - name: "Sensors"
+#       ansible.builtin.include_tasks: ./tasklists/localmachines/sensors.yaml
+
+- name: "Router Setup"
+  hosts: "router"
+  become: true
+  tasks:
+    # - name: "Network Config"
+    #   ansible.builtin.include_tasks: ./tasklists/router/netplan.yaml
+    - name: "Firewall"
+      ansible.builtin.include_tasks: ./tasklists/router/firewall.yaml
+    - name: "DHCP"
+      ansible.builtin.include_tasks: ./tasklists/router/dhcp.yaml
+    - name: "DNS"
+      ansible.builtin.include_tasks: ./tasklists/router/dns.yaml

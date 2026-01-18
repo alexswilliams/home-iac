@@ -1,0 +1,12 @@
+- name: Sensors package is installed
+  ansible.builtin.package:
+    state: present
+    name:
+      - "{{ item }}"
+  with_items:
+    - "{{ sensor_package[ansible_facts['os_family']] }}"
+  when: sensor_package[ansible_facts['os_family']] is defined
+  vars:
+    sensor_package:
+      Debian: lm-sensors
+      Archlinux: lm_sensors

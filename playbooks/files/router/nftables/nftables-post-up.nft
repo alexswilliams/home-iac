@@ -1,0 +1,128 @@
+#!/usr/sbin/nft -f
+
+destroy table ip router
+destroy table ip nat
+destroy table ip6 router
+
+define IF_EXTERNAL = "eth0"
+define IF_MANAGEMENT = "eth0.t10-mgmt"
+define IF_MAIN = "eth0.t12-main"
+define IF_WORK = "eth0.t13-work"
+define IF_MEDIA = "eth0.t14-media"
+define IF_IOT = "eth0.t15-iot"
+define IF_MONITORING = "eth0.t16-monitr"
+define IF_GUEST = "eth0.t100-guest"
+
+table ip router {
+  chain input {
+    type filter hook input priority 0; policy drop;
+    ct state vmap { invalid: drop, established: accept, related: accept };
+
+    iif != "lo" ip daddr 127.0.0.0/8 drop;
+    iif "lo" accept;
+
+    ip protocol icmp accept;
+
+    udp dport 67 udp sport 68 accept;
+    udp dport 53 accept;
+    tcp dport 53 accept;
+
+    iif { $IF_EXTERNAL, $IF_IOT, $IF_MEDIA, $IF_WORK } drop;
+
+    tcp dport 22 accept;
+
+    udp dport { 137, 138 } drop comment "NetBIOS chatter";
+    udp dport 17500 drop comment "Dropbox chatter";
+    udp dport 57621 drop comment "Spotify chatter";
+
+    meta nftrace set 1;
+  }
+
+  chain forward {
+    type filter hook forward priority 0; policy accept;
+    ct state vmap { invalid: drop, established: accept, related: accept };
+
+    ip daddr 255.255.255.255 drop;
+
+    udp dport 9999 drop comment "TPLink Kasa discovery protocol";
+    udp dport 10101 drop comment "Google Home discovery protocol 1";
+    udp dport { 9487, 9478 } drop comment "Google Home discovery protocol 2";
+    udp dport { 137, 138 } drop comment "NetBIOS chatter";
+    udp dport 17500 drop comment "Dropbox chatter";
+    udp dport 57621 drop comment "Spotify chatter";
+
+    iif $IF_MANAGEMENT goto from-management-rules;
+    iif $IF_MAIN goto from-main-rules;
+    iif $IF_WORK goto from-work-rules;
+    iif $IF_MEDIA goto from-media-rules;
+    iif $IF_IOT goto from-iot-rules;
+    iif $IF_MONITORING goto from-monitoring-rules;
+    iif $IF_GUEST goto from-guest-rules;
+  }
+
+  chain output {
+    type filter hook output priority 0; policy accept;
+    ct state vmap { invalid: drop, established: accept, related: accept };
+
+    oif != "lo" ip saddr 127.0.0.0/8 drop;
+    oif "lo" accept;
+  }
+
+  chain from-management-rules {
+    drop;
+  }
+
+  chain from-main-rules {
+    accept;
+  }
+
+  chain from-work-rules {
+    oif $IF_EXTERNAL accept;
+    drop;
+  }
+
+  chain from-media-rules {
+    oif $IF_EXTERNAL accept;
+    drop;
+  }
+
+  chain from-iot-rules {
+    oif $IF_EXTERNAL accept;
+    drop;
+  }
+
+  chain from-monitoring-rules {
+    oif $IF_EXTERNAL accept;
+    accept;
+  }
+
+  chain from-guest-rules {
+    oif $IF_EXTERNAL accept;
+    drop;
+  }
+}
+
+table ip nat {
+  chain postrouting {
+    type nat hook postrouting priority 100; policy accept;
+    oif $IF_EXTERNAL masquerade
+  }
+}
+
+table ip6 router {
+  chain input {
+    type filter hook input priority 0; policy drop;
+    ct state vmap { invalid: drop, established: accept, related: accept };
+    iif != "lo" ip6 daddr ::1/128 drop;
+    iif "lo" accept;
+  }
+  chain forward {
+    type filter hook forward priority 0; policy drop;
+  }
+  chain output {
+    type filter hook output priority 0; policy drop;
+    ct state invalid drop;
+    oif != "lo" ip6 saddr ::1/128 drop;
+    oif "lo" accept;
+  }
+}

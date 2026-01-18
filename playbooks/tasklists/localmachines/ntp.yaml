@@ -1,0 +1,41 @@
+- name: Configure systemd timesyncd
+  register: timesyncd_config
+  ansible.builtin.copy:
+    dest: /etc/systemd/timesyncd.conf
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      [Time]
+      NTP=uk.pool.ntp.org
+      RootDistanceMaxSec=5
+      PollIntervalMinSec=3600
+      PollIntervalMaxSec=86400
+
+- name: Apply timesyncd changes
+  ansible.builtin.service:
+    name: systemd-timesyncd
+    state: restarted
+  when: timesyncd_config.changed
+
+- name: Use fake hw clock if needed
+  ansible.builtin.package:
+    name: fake-hwclock
+    state: present
+  when: no_hw_clock is defined
+
+- name: Enable fake-hwclock services
+  ansible.builtin.service:
+    name: "{{ item }}"
+    enabled: true
+  with_items:
+    - fake-hwclock-load.service
+    - fake-hwclock-save.service
+  when: no_hw_clock is defined
+
+- name: Enable fake-hwclock-save timer
+  ansible.builtin.service:
+    name: "fake-hwclock-save.timer"
+    state: started
+    enabled: true
+  when: no_hw_clock is defined

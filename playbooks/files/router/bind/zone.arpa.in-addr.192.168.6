@@ -1,0 +1,14 @@
+$TTL 10m
+@ IN SOA router-pi.monitoring.local. hostmaster.local. (
+  2026011801  ; serial
+  1m          ; secondary server refresh interval
+  1m          ; secondary sever retry interval
+  365d        ; secondary server expire-on-split-brain duratoin
+  10          ; nxdomain cache time
+)
+
+      IN  NS    router-pi.monitoring.local.
+
+2     IN  PTR   router-pi.monitoring.local.
+10    IN  PTR   monitoring-pi-4b.monitoring.local.
+11    IN  PTR   raspberry-pi-1b.monitoring.local.

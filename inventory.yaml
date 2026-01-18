@@ -1,0 +1,32 @@
+all:
+  hosts:
+    192.168.2.2:
+      ansible_user: alex
+      hostname_to_set: router-pi
+      lm_sensors_pkg: lm-sensors
+      cron_pkg: cron
+      no_hw_clock: true
+      nightly_reboot_6am_minute: "12"
+      ipv6_forwarding: "0"
+      ipv4_forwarding: "1"
+    vps:
+      ansible_user: ec2-user
+      hostname_to_set: vps
+      lm_sensors_pkg: lm_sensors
+      cron_pkg: cronie
+      nightly_reboot_6am_minute: "4"
+      ipv6_forwarding: "0"
+      ipv4_forwarding: "0"
+
+sshenabled:
+  hosts:
+    192.168.2.2:
+    vps:
+
+localmachines:
+  hosts:
+    192.168.2.2:
+
+router:
+  hosts:
+    192.168.2.2:

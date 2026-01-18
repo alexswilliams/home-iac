@@ -1,0 +1,667 @@
+{
+  "Dhcp4": {
+    "loggers": [
+      {
+        "name": "kea-dhcp4",
+        "output-options": [
+          {
+            "output": "/var/log/kea/kea-debug.log",
+            "maxver": 8,
+            "maxsize": 204800,
+            "flush": true,
+            "pattern": "%d{%j %H:%M:%S.%q} %c %m\n"
+          }
+        ],
+        "severity": "INFO"
+      }
+    ],
+    "interfaces-config": {
+      "interfaces": [
+        "eth0.t10-mgmt",
+        "eth0.t12-main",
+        "eth0.t13-work",
+        "eth0.t14-media",
+        "eth0.t15-iot",
+        "eth0.t16-monitr",
+        "eth0.t100-guest"
+      ]
+    },
+    "valid-lifetime": 3600,
+    "max-valid-lifetime": 7200,
+    "dhcp-ddns": {
+      "enable-updates": false
+    },
+    "authoritative": true,
+    "subnet4": [
+      {
+        "id": 1,
+        "subnet": "192.168.0.0/24",
+        "interface": "eth0.t10-mgmt",
+        "option-data": [
+          {
+            "space": "dhcp4",
+            "name": "domain-name",
+            "code": 15,
+            "data": "management.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-search",
+            "code": 119,
+            "data": "management.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-name-servers",
+            "code": 6,
+            "data": "192.168.0.2, 1.1.1.1"
+          },
+          {
+            "space": "dhcp4",
+            "name": "routers",
+            "code": 3,
+            "data": "192.168.0.254"
+          },
+          {
+            "space": "dhcp4",
+            "name": "subnet-mask",
+            "code": 1,
+            "data": "255.255.255.0"
+          }
+        ],
+        "reservations": [
+          {
+            "hostname": "router",
+            "hw-address": "2c:cf:67:5a:74:6a",
+            "ip-address": "192.168.0.2"
+          },
+          {
+            "hostname": "top-switch-gs308e",
+            "hw-address": "28:94:01:7b:61:f8",
+            "ip-address": "192.168.0.10"
+          },
+          {
+            "hostname": "work-desk-switch-gs305e",
+            "hw-address": "54:07:7d:2a:17:33",
+            "ip-address": "192.168.0.11"
+          },
+          {
+            "hostname": "media-switch-gs108ev2",
+            "hw-address": "28:c6:8e:fb:36:cd",
+            "ip-address": "192.168.0.12"
+          },
+          {
+            "hostname": "access-point-902",
+            "hw-address": "00:1d:aa:3d:4f:86",
+            "ip-address": "192.168.0.20"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "subnet": "192.168.2.0/24",
+        "interface": "eth0.t12-main",
+        "option-data": [
+          {
+            "space": "dhcp4",
+            "name": "domain-name",
+            "code": 15,
+            "data": "main.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-search",
+            "code": 119,
+            "data": "main.local, management.local, work.local, media.local, iot.local, monitoring.local, guest.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-name-servers",
+            "code": 6,
+            "data": "192.168.2.2, 1.1.1.1"
+          },
+          {
+            "space": "dhcp4",
+            "name": "routers",
+            "code": 3,
+            "data": "192.168.2.2"
+          },
+          {
+            "space": "dhcp4",
+            "name": "subnet-mask",
+            "code": 1,
+            "data": "255.255.255.0"
+          }
+        ],
+        "reservations": [
+          {
+            "hostname": "router",
+            "hw-address": "2c:cf:67:5a:74:6a",
+            "ip-address": "192.168.2.2"
+          },
+          {
+            "hostname": "desktop-wired",
+            "hw-address": "0c:9d:92:84:74:8b",
+            "ip-address": "192.168.2.10"
+          },
+          {
+            "hostname": "laptop-wired",
+            "hw-address": "38:d5:47:97:4a:94",
+            "ip-address": "192.168.2.11"
+          },
+          {
+            "hostname": "laptop-wifi",
+            "hw-address": "a0:b3:39:33:b0:c6",
+            "ip-address": "192.168.2.12"
+          },
+          {
+            "hostname": "pixel-4",
+            "hw-address": "f8:0f:f9:d2:d3:74",
+            "ip-address": "192.168.2.200"
+          },
+          {
+            "hostname": "pixel-6",
+            "hw-address": "dc:e5:5b:e3:f4:e5",
+            "ip-address": "192.168.2.201"
+          },
+          {
+            "hostname": "pixel-8",
+            "hw-address": "d4:3a:2c:5f:2b:91",
+            "ip-address": "192.168.2.202"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "subnet": "192.168.3.0/24",
+        "interface": "eth0.t13-work",
+        "option-data": [
+          {
+            "space": "dhcp4",
+            "name": "domain-name",
+            "code": 15,
+            "data": "work.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-search",
+            "code": 119,
+            "data": "work.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-name-servers",
+            "code": 6,
+            "data": "192.168.3.2, 1.1.1.1"
+          },
+          {
+            "space": "dhcp4",
+            "name": "routers",
+            "code": 3,
+            "data": "192.168.3.2"
+          },
+          {
+            "space": "dhcp4",
+            "name": "subnet-mask",
+            "code": 1,
+            "data": "255.255.255.0"
+          }
+        ],
+        "reservations": [
+          {
+            "hostname": "router",
+            "hw-address": "2c:cf:67:5a:74:6a",
+            "ip-address": "192.168.3.2"
+          },
+          {
+            "hostname": "m1-wifi",
+            "hw-address": "bc:d0:74:73:04:d2",
+            "ip-address": "192.168.3.10"
+          },
+          {
+            "hostname": "dock-wired",
+            "hw-address": "64:4b:f0:2b:b1:d9",
+            "ip-address": "192.168.3.11"
+          },
+          {
+            "hostname": "thunderbolt-nic",
+            "hw-address": "3c:cd:36:5e:92:44",
+            "ip-address": "192.168.3.12"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "subnet": "192.168.4.0/24",
+        "interface": "eth0.t14-media",
+        "option-data": [
+          {
+            "space": "dhcp4",
+            "name": "domain-name",
+            "code": 15,
+            "data": "media.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-search",
+            "code": 119,
+            "data": "media.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-name-servers",
+            "code": 6,
+            "data": "192.168.4.2, 1.1.1.1"
+          },
+          {
+            "space": "dhcp4",
+            "name": "routers",
+            "code": 3,
+            "data": "192.168.4.2"
+          },
+          {
+            "space": "dhcp4",
+            "name": "subnet-mask",
+            "code": 1,
+            "data": "255.255.255.0"
+          }
+        ],
+        "reservations": [
+          {
+            "hostname": "router",
+            "hw-address": "2c:cf:67:5a:74:6a",
+            "ip-address": "192.168.4.2"
+          },
+          {
+            "hostname": "amazon-tv-wired",
+            "hw-address": "10:ae:60:dc:0d:2d",
+            "ip-address": "192.168.4.10"
+          },
+          {
+            "hostname": "amazon-tv-wifi",
+            "hw-address": "11:11:11:11:11:11",
+            "ip-address": "192.168.4.11",
+            "comment": "TODO"
+          },
+          {
+            "hostname": "chromecast-wired",
+            "hw-address": "00:00:10:01:78:96",
+            "ip-address": "192.168.4.12"
+          },
+          {
+            "hostname": "chromecast-wifi",
+            "hw-address": "b0:2a:43:48:a8:95",
+            "ip-address": "192.168.4.13"
+          },
+          {
+            "hostname": "pixel-4",
+            "hw-address": "f8:0f:f9:d2:d3:74",
+            "ip-address": "192.168.4.200"
+          },
+          {
+            "hostname": "pixel-6",
+            "hw-address": "dc:e5:5b:e3:f4:e5",
+            "ip-address": "192.168.4.201"
+          },
+          {
+            "hostname": "pixel-8",
+            "hw-address": "d4:3a:2c:5f:2b:91",
+            "ip-address": "192.168.4.202"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "subnet": "192.168.5.0/24",
+        "interface": "eth0.t15-iot",
+        "option-data": [
+          {
+            "space": "dhcp4",
+            "name": "domain-name",
+            "code": 15,
+            "data": "iot.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-search",
+            "code": 119,
+            "data": "iot.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-name-servers",
+            "code": 6,
+            "data": "192.168.5.2, 1.1.1.1"
+          },
+          {
+            "space": "dhcp4",
+            "name": "routers",
+            "code": 3,
+            "data": "192.168.5.2"
+          },
+          {
+            "space": "dhcp4",
+            "name": "subnet-mask",
+            "code": 1,
+            "data": "255.255.255.0"
+          }
+        ],
+        "reservations": [
+          {
+            "hostname": "router",
+            "hw-address": "2c:cf:67:5a:74:6a",
+            "ip-address": "192.168.5.2"
+          },
+          {
+            "hostname": "garmin-vivoactive",
+            "hw-address": "10:4e:89:df:a7:df",
+            "ip-address": "192.168.5.10"
+          },
+          {
+            "hostname": "kl130b-living-room",
+            "hw-address": "c0:c9:e3:79:17:8c",
+            "ip-address": "192.168.5.40"
+          },
+          {
+            "hostname": "kl130b-landing",
+            "hw-address": "c0:c9:e3:79:29:cd",
+            "ip-address": "192.168.5.41"
+          },
+          {
+            "hostname": "kl130b-snug",
+            "hw-address": "b0:95:75:3c:50:08",
+            "ip-address": "192.168.5.42"
+          },
+          {
+            "hostname": "kl130b-box-room",
+            "hw-address": "b0:95:75:4a:b4:0d",
+            "ip-address": "192.168.5.43"
+          },
+          {
+            "hostname": "kl110b-hall",
+            "hw-address": "68:ff:7b:43:93:f8",
+            "ip-address": "192.168.5.44"
+          },
+          {
+            "hostname": "kl50b-front-bedroom",
+            "hw-address": "d8:47:32:1b:5f:63",
+            "ip-address": "192.168.5.45"
+          },
+          {
+            "hostname": "l535b-back-bedroom",
+            "hw-address": "20:23:51:4a:9d:e7",
+            "ip-address": "192.168.5.46"
+          },
+          {
+            "hostname": "l535b-office",
+            "hw-address": "20:23:51:4a:9d:0b",
+            "ip-address": "192.168.5.47"
+          },
+          {
+            "hostname": "hs100-christmas-lights",
+            "hw-address": "68:ff:7b:a6:12:5e",
+            "ip-address": "192.168.5.48"
+          },
+          {
+            "hostname": "hs100-living-room-lamp",
+            "hw-address": "68:ff:7b:a6:11:ac",
+            "ip-address": "192.168.5.49"
+          },
+          {
+            "hostname": "hs100-lava-lamp",
+            "hw-address": "68:ff:7b:a6:11:e6",
+            "ip-address": "192.168.5.50"
+          },
+          {
+            "hostname": "l900-bookshelf-strip",
+            "hw-address": "6c:5a:b0:32:47:0f",
+            "ip-address": "192.168.5.52"
+          },
+          {
+            "hostname": "p110-bookshelf-ball-lights",
+            "hw-address": "28:87:ba:c8:cd:ed",
+            "ip-address": "192.168.5.53"
+          },
+          {
+            "hostname": "hs110-work-desk-power",
+            "hw-address": "d8:0d:17:6c:7d:47",
+            "ip-address": "192.168.5.70"
+          },
+          {
+            "hostname": "hs110-pc-desk-power",
+            "hw-address": "d8:0d:17:d8:57:91",
+            "ip-address": "192.168.5.71"
+          },
+          {
+            "hostname": "hs110-air-purifier",
+            "hw-address": "d8:0d:17:23:45:48",
+            "ip-address": "192.168.5.72"
+          },
+          {
+            "hostname": "p100-radiator-power",
+            "hw-address": "5c:a6:e6:fe:c3:36",
+            "ip-address": "192.168.5.73"
+          },
+          {
+            "hostname": "hs110-kettle",
+            "hw-address": "d8:0d:17:6c:7f:e9",
+            "ip-address": "192.168.5.74"
+          },
+          {
+            "hostname": "p100-slow-cooker",
+            "hw-address": "5c:a6:e6:fe:be:0b",
+            "ip-address": "192.168.5.75"
+          },
+          {
+            "hostname": "kp115-microwave-power",
+            "hw-address": "78:8c:b5:74:35:15",
+            "ip-address": "192.168.5.76"
+          },
+          {
+            "hostname": "p110-toaster",
+            "hw-address": "28:87:ba:c8:df:77",
+            "ip-address": "192.168.5.77"
+          },
+          {
+            "hostname": "kp115-av-power",
+            "hw-address": "78:8c:b5:74:3b:62",
+            "ip-address": "192.168.5.78"
+          },
+          {
+            "hostname": "radiator-wifi",
+            "hw-address": "84:f3:eb:a3:d2:04",
+            "ip-address": "192.168.5.90"
+          },
+          {
+            "hostname": "hive-hub",
+            "hw-address": "00:1c:2b:5a:9d:25",
+            "ip-address": "192.168.5.91"
+          },
+          {
+            "hostname": "trmnl",
+            "hw-address": "cc:ba:97:4e:f7:c0",
+            "ip-address": "192.168.5.92"
+          },
+          {
+            "hostname": "withings-scales",
+            "hw-address": "00:24:e4:d1:e5:0e",
+            "ip-address": "192.168.5.93"
+          },
+          {
+            "hostname": "google-home-front-bedroom",
+            "hw-address": "3c:8d:20:2e:a4:be",
+            "ip-address": "192.168.5.110"
+          },
+          {
+            "hostname": "google-home-kitchen",
+            "hw-address": "cc:f4:11:bd:49:52",
+            "ip-address": "192.168.5.111"
+          },
+          {
+            "hostname": "google-home-living-room",
+            "hw-address": "14:c1:4e:33:5e:99",
+            "ip-address": "192.168.5.112"
+          },
+          {
+            "hostname": "google-home-office",
+            "hw-address": "30:fd:38:b1:21:a8",
+            "ip-address": "192.168.5.113"
+          },
+          {
+            "hostname": "google-hub-bedroom",
+            "hw-address": "ac:67:84:1d:4d:4e",
+            "ip-address": "192.168.5.114"
+          },
+          {
+            "hostname": "c110-front-camera",
+            "hw-address": "5c:e9:31:df:29:f4",
+            "ip-address": "192.168.5.130"
+          },
+          {
+            "hostname": "c110-chimney-camera",
+            "hw-address": "60:83:e7:96:e2:65",
+            "ip-address": "192.168.5.131"
+          },
+          {
+            "hostname": "pixel-4",
+            "hw-address": "f8:0f:f9:d2:d3:74",
+            "ip-address": "192.168.5.200"
+          },
+          {
+            "hostname": "pixel-6",
+            "hw-address": "dc:e5:5b:e3:f4:e5",
+            "ip-address": "192.168.5.201"
+          },
+          {
+            "hostname": "pixel-8",
+            "hw-address": "d4:3a:2c:5f:2b:91",
+            "ip-address": "192.168.5.202"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "subnet": "192.168.6.0/24",
+        "interface": "eth0.t16-monitr",
+        "option-data": [
+          {
+            "space": "dhcp4",
+            "name": "domain-name",
+            "code": 15,
+            "data": "monitoring.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-search",
+            "code": 119,
+            "data": "monitoring.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-name-servers",
+            "code": 6,
+            "data": "192.168.6.2, 1.1.1.1"
+          },
+          {
+            "space": "dhcp4",
+            "name": "routers",
+            "code": 3,
+            "data": "192.168.6.2"
+          },
+          {
+            "space": "dhcp4",
+            "name": "subnet-mask",
+            "code": 1,
+            "data": "255.255.255.0"
+          }
+        ],
+        "reservations": [
+          {
+            "hostname": "router",
+            "hw-address": "2c:cf:67:5a:74:6a",
+            "ip-address": "192.168.6.2"
+          },
+          {
+            "hostname": "monitoring-pi-4b",
+            "hw-address": "dc:a6:32:45:5f:f0",
+            "ip-address": "192.168.6.10"
+          },
+          {
+            "hostname": "raspberry-pi-1b",
+            "hw-address": "b8:27:eb:0f:20:73",
+            "ip-address": "192.168.6.11"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "subnet": "192.168.100.0/24",
+        "interface": "eth0.t100-guest",
+        "option-data": [
+          {
+            "space": "dhcp4",
+            "name": "domain-name",
+            "code": 15,
+            "data": "guest.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-search",
+            "code": 119,
+            "data": "guest.local"
+          },
+          {
+            "space": "dhcp4",
+            "name": "domain-name-servers",
+            "code": 6,
+            "data": "192.168.100.2, 1.1.1.1"
+          },
+          {
+            "space": "dhcp4",
+            "name": "routers",
+            "code": 3,
+            "data": "192.168.100.2"
+          },
+          {
+            "space": "dhcp4",
+            "name": "subnet-mask",
+            "code": 1,
+            "data": "255.255.255.0"
+          }
+        ],
+        "reservations": [
+          {
+            "hostname": "router",
+            "hw-address": "2c:cf:67:5a:74:6a",
+            "ip-address": "192.168.100.2"
+          },
+          {
+            "hostname": "pixel-4",
+            "hw-address": "f8:0f:f9:d2:d3:74",
+            "ip-address": "192.168.100.200"
+          },
+          {
+            "hostname": "pixel-6",
+            "hw-address": "dc:e5:5b:e3:f4:e5",
+            "ip-address": "192.168.100.201"
+          },
+          {
+            "hostname": "pixel-8",
+            "hw-address": "d4:3a:2c:5f:2b:91",
+            "ip-address": "192.168.100.202"
+          }
+        ],
+        "pools": [
+          {
+            "pool": "192.168.100.150 - 192.168.100.199"
+          }
+        ]
+      }
+    ],
+    "host-reservation-identifiers": [
+      "hw-address"
+    ],
+    "reservations-global": false,
+    "reservations-out-of-pool": true
+  }
+}

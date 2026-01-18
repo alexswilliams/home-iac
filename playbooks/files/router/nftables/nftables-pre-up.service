@@ -1,0 +1,15 @@
+[Unit]
+Description=nftables-pre-up
+Wants=network-pre.target
+Before=network-pre.target
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+StandardInput=null
+ProtectSystem=full
+ProtectHome=true
+ExecStart=/usr/sbin/nft -f /etc/nftables-pre-up.conf
+
+[Install]
+WantedBy=sysinit.target

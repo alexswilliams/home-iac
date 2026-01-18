@@ -1,0 +1,13 @@
+$TTL 10m
+@ IN SOA router-pi.external.local. hostmaster.local. (
+  2026011801  ; serial
+  1m          ; secondary server refresh interval
+  1m          ; secondary sever retry interval
+  365d        ; secondary server expire-on-split-brain duratoin
+  10          ; nxdomain cache time
+)
+
+  IN NS router-pi.external.local.
+
+modem                 IN  A     192.168.1.1
+router-pi             IN  A     192.168.1.2

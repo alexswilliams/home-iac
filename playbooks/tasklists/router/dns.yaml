@@ -1,0 +1,67 @@
+- name: Debian keyring/archive/https installed
+  ansible.builtin.package:
+    name:
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+    state: present
+- name: ISC BIND Keyring
+  ansible.builtin.get_url:
+    url: "https://packages.sury.org/bind/apt.gpg"
+    dest: /usr/share/keyrings/debsuryorg-archive-keyring.gpg
+    mode: "0644"
+- name: ISC BIND Repo
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/isc-bind-9.list
+    mode: "0644"
+    content: |
+      deb [signed-by=/usr/share/keyrings/debsuryorg-archive-keyring.gpg] https://packages.sury.org/bind/ {{ ansible_distribution_release }} main
+  register: isc_bind_repo
+- name: Refresh apt
+  ansible.builtin.apt:
+    update_cache: true
+  when: isc_bind_repo.changed
+
+- name: Package bind9
+  ansible.builtin.package:
+    name:
+      - bind9
+      - bind9-dnsutils
+    state: present
+
+- name: Bind config directory is present
+  ansible.posix.synchronize:
+    delete: true
+    recursive: true
+    src: files/router/bind
+    dest: /etc/
+    rsync_opts:
+      - "--exclude=**/rndc.key"
+      - "--chmod=D0755,F0644"
+      - "--chown=root:bind"
+  register: bind9_config
+
+- name: RNDC Key Exists
+  ansible.builtin.stat:
+    path: /etc/bind/rndc.key
+  register: rndc_key
+- name: RNDC Key Generated
+  ansible.builtin.command:
+    cmd: /usr/sbin/rndc-confgen -a -c /etc/bind/rndc.key -u bind
+  when: not rndc_key.stat.exists
+
+- name: Named config is valid
+  ansible.builtin.command:
+    cmd: /usr/bin/named-checkconf
+  when: bind9_config.changed
+
+- name: Named is reloaded when changes made
+  ansible.builtin.service:
+    name: named
+    state: restarted
+  when: bind9_config.changed
+
+- name: Named is enabled on boot
+  ansible.builtin.service:
+    name: named
+    enabled: true

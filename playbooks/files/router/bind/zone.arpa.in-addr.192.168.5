@@ -1,0 +1,56 @@
+$TTL 10m
+@ IN SOA router-pi.iot.local. hostmaster.local. (
+  2026011801  ; serial
+  1m          ; secondary server refresh interval
+  1m          ; secondary sever retry interval
+  365d        ; secondary server expire-on-split-brain duratoin
+  10          ; nxdomain cache time
+)
+
+      IN  NS    router-pi.iot.local.
+
+2     IN  PTR   router-pi.iot.local.
+
+10    IN  PTR   garmin-vivoactive.iot.local.
+
+40    IN  PTR   kl130b-living-room.iot.local.
+41    IN  PTR   kl130b-landing.iot.local.
+42    IN  PTR   kl130b-snug.iot.local.
+43    IN  PTR   kl130b-box-room.iot.local.
+44    IN  PTR   kl110b-hall.iot.local.
+45    IN  PTR   kl50b-front-bedroom.iot.local.
+46    IN  PTR   l535b-back-bedroom.iot.local.
+47    IN  PTR   l535b-office.iot.local.
+48    IN  PTR   hs100-christmas-lights.iot.local.
+49    IN  PTR   hs100-living-room-lamp.iot.local.
+50    IN  PTR   hs100-lava-lamp.iot.local.
+51    IN  PTR   l900-bookshelf-strip.iot.local.
+52    IN  PTR   p110-bookshelf-ball-lights.iot.local.
+
+70    IN  PTR   hs110-work-desk-power.iot.local.
+71    IN  PTR   hs110-pc-desk-power.iot.local.
+72    IN  PTR   hs110-air-purifier.iot.local.
+73    IN  PTR   p100-radiator-power.iot.local.
+74    IN  PTR   hs110-kettle.iot.local.
+75    IN  PTR   p100-slow-cooker.iot.local.
+76    IN  PTR   kp115-microwave-power.iot.local.
+77    IN  PTR   p110-toaster.iot.local.
+78    IN  PTR   kp115-av-power.iot.local.
+
+90    IN  PTR   radiator-wifi.iot.local.
+91    IN  PTR   hive-hub.iot.local.
+92    IN  PTR   trmnl.iot.local.
+93    IN  PTR   withings-scales.iot.local.
+
+110   IN  PTR   google-home-front-bedroom.iot.local.
+111   IN  PTR   google-home-kitchen.iot.local.
+112   IN  PTR   google-home-living-room.iot.local.
+113   IN  PTR   google-home-office.iot.local.
+114   IN  PTR   google-hub-bedroom.iot.local.
+
+130   IN  PTR   c110-front-camera.iot.local.
+131   IN  PTR   c110-chimney-camera.iot.local.
+
+200   IN  PTR   pixel-4.iot.local.
+201   IN  PTR   pixel-6.iot.local.
+202   IN  PTR   pixel-8.iot.local.

@@ -1,0 +1,56 @@
+$TTL 10m
+@ IN SOA router-pi.iot.local. hostmaster.local. (
+  2026011801  ; serial
+  1m          ; secondary server refresh interval
+  1m          ; secondary sever retry interval
+  365d        ; secondary server expire-on-split-brain duratoin
+  10          ; nxdomain cache time
+)
+
+  IN NS router-pi.iot.local.
+
+router-pi             IN  A     192.168.5.2
+
+garmin-vivoactive     IN  A     192.168.5.10
+
+kl130b-living-room    IN  A     192.168.5.40
+kl130b-landing        IN  A     192.168.5.41
+kl130b-snug           IN  A     192.168.5.42
+kl130b-box-room       IN  A     192.168.5.43
+kl110b-hall           IN  A     192.168.5.44
+kl50b-front-bedroom   IN  A     192.168.5.45
+l535b-back-bedroom    IN  A     192.168.5.46
+l535b-office          IN  A     192.168.5.47
+hs100-christmas-lights IN A     192.168.5.48
+hs100-living-room-lamp IN A     192.168.5.49
+hs100-lava-lamp       IN  A     192.168.5.50
+l900-bookshelf-strip  IN  A     192.168.5.51
+p110-bookshelf-ball-lights IN A 192.168.5.52
+
+hs110-work-desk-power IN  A     192.168.5.70
+hs110-pc-desk-power   IN  A     192.168.5.71
+hs110-air-purifier    IN  A     192.168.5.72
+p100-radiator-power   IN  A     192.168.5.73
+hs110-kettle          IN  A     192.168.5.74
+p100-slow-cooker      IN  A     192.168.5.75
+kp115-microwave-power IN  A     192.168.5.76
+p110-toaster          IN  A     192.168.5.77
+kp115-av-power        IN  A     192.168.5.78
+
+radiator-wifi         IN  A     192.168.5.90
+hive-hub              IN  A     192.168.5.91
+trmnl                 IN  A     192.168.5.92
+withings-scales       IN  A     192.168.5.93
+
+google-home-front-bedroom IN A  192.168.5.110
+google-home-kitchen   IN  A     192.168.5.111
+google-home-living-room IN A    192.168.5.112
+google-home-office    IN  A     192.168.5.113
+google-hub-bedroom    IN  A     192.168.5.114
+
+c110-front-camera     IN  A     192.168.5.130
+c110-chimney-camera   IN  A     192.168.5.131
+
+pixel-4               IN  A     192.168.5.200
+pixel-6               IN  A     192.168.5.201
+pixel-8               IN  A     192.168.5.202

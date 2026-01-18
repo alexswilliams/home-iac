@@ -1,0 +1,24 @@
+- name: Netplan Config
+  ansible.builtin.copy:
+    dest: /etc/netplan/50-net.yaml
+    src: files/router/netplan.yaml
+    group: root
+    owner: root
+    mode: "0600"
+  register: netplan_config
+
+- name: Netplan is applied when changes made
+  ansible.builtin.command:
+    cmd: /usr/sbin/netplan apply
+  changed_when: true
+  when: netplan_config.changed
+
+- name: Networkd is enabled on boot
+  ansible.builtin.service:
+    name: systemd-networkd.service
+    enabled: true
+
+- name: Networkd wait-online is enabled on boot
+  ansible.builtin.service:
+    name: systemd-networkd-wait-online.service
+    enabled: true
