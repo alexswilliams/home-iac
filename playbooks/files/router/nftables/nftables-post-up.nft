@@ -31,6 +31,8 @@ table ip router {
 
     tcp dport 22 accept;
 
+    tcp dport 9100 iif { $IF_MAIN, $IF_MONITORING } accept;
+
     udp dport { 137, 138 } drop comment "NetBIOS chatter";
     udp dport 17500 drop comment "Dropbox chatter";
     udp dport 57621 drop comment "Spotify chatter";
@@ -77,6 +79,7 @@ table ip router {
   }
 
   chain from-work-rules {
+    oif $IF_MANAGEMENT ip daddr 192.168.6.10 tcp dport 3000 accept;
     oif $IF_EXTERNAL accept;
     drop;
   }

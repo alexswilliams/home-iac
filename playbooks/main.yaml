@@ -34,12 +34,24 @@
 #     - name: "Sensors"
 #       ansible.builtin.include_tasks: ./tasklists/localmachines/sensors.yaml
 
+# - name: "Prometheus Node Exporter"
+#   hosts: "localmachines"
+#   roles:
+#     - prometheus.prometheus.node_exporter
+#   vars:
+#     node_exporter_version: "1.10.2"
+#     node_exporter_config_dir: "/etc/node_exporter"
+#     node_exporter_system_user: "node-exp"
+#     node_exporter_system_group: "node-exp"
+#     node_exporter_web_disable_exporter_metrics: true
+#     node_exporter_web_listen_address: "0.0.0.0:9100"
+
 - name: "Router Setup"
   hosts: "router"
   become: true
   tasks:
-    # - name: "Network Config"
-    #   ansible.builtin.include_tasks: ./tasklists/router/netplan.yaml
+    - name: "Network Config"
+      ansible.builtin.include_tasks: ./tasklists/router/netplan.yaml
     - name: "Firewall"
       ansible.builtin.include_tasks: ./tasklists/router/firewall.yaml
     - name: "DHCP"
