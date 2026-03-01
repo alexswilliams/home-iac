@@ -91,6 +91,16 @@
     - net.ipv4.conf.default.forwarding
     - net.ipv4.ip_forward
 
+- name: IPv4 NetFilter conntrack accounting is set
+  ansible.posix.sysctl:
+    state: present
+    name: "{{ item }}"
+    value: "{{ ipv4_forwarding }}"
+    sysctl_set: true
+  with_items:
+    - net.netfilter.nf_conntrack_acct
+  when: ipv4_forwarding == "1" or ipv6_forwarding == "1"
+
 - name: Extra sysctl rules file added for forwarding
   ansible.builtin.copy:
     dest: /etc/sysctl.d/99-ip-forward.conf

@@ -40,8 +40,15 @@ table ip router {
     meta nftrace set 1;
   }
 
+  flowtable bypass {
+    hook ingress priority 0;
+    devices = { $IF_EXTERNAL, $IF_MAIN, $IF_GUEST, $IF_MEDIA, $IF_WORK };
+    counter;
+  }
+
   chain forward {
     type filter hook forward priority 0; policy accept;
+    tcp dport { 22, 443 } flow add @bypass counter packets 0 bytes 0;
     ct state vmap { invalid: drop, established: accept, related: accept };
 
     ip daddr 255.255.255.255 drop;
@@ -74,17 +81,17 @@ table ip router {
   }
 
   chain from-main-rules {
-    accept;
+    counter accept;
   }
 
   chain from-work-rules {
     oif $IF_MONITORING ip daddr 192.168.6.10 tcp dport { 3000, 9090 } accept;
-    oif $IF_EXTERNAL accept;
+    oif $IF_EXTERNAL counter accept;
     drop;
   }
 
   chain from-media-rules {
-    oif $IF_EXTERNAL accept;
+    oif $IF_EXTERNAL counter accept;
     drop;
   }
 
@@ -100,7 +107,7 @@ table ip router {
   }
 
   chain from-guest-rules {
-    oif $IF_EXTERNAL accept;
+    oif $IF_EXTERNAL counter accept;
     drop;
   }
 }
