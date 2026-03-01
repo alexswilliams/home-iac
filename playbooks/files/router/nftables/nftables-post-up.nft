@@ -47,8 +47,7 @@ table ip router {
     ip daddr 255.255.255.255 drop;
 
     udp dport 9999 drop comment "TPLink Kasa discovery protocol";
-    udp dport 10101 drop comment "Google Home discovery protocol 1";
-    udp dport { 9487, 9478 } drop comment "Google Home discovery protocol 2";
+    udp dport { 9487, 9478, 10101 } drop comment "Google Home discovery protocol";
     udp dport { 137, 138 } drop comment "NetBIOS chatter";
     udp dport 17500 drop comment "Dropbox chatter";
     udp dport 57621 drop comment "Spotify chatter";
@@ -79,7 +78,7 @@ table ip router {
   }
 
   chain from-work-rules {
-    oif $IF_MANAGEMENT ip daddr 192.168.6.10 tcp dport 3000 accept;
+    oif $IF_MONITORING ip daddr 192.168.6.10 tcp dport { 3000, 9090 } accept;
     oif $IF_EXTERNAL accept;
     drop;
   }
