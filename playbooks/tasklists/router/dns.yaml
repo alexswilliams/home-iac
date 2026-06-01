@@ -54,6 +54,7 @@
   ansible.builtin.command:
     cmd: /usr/bin/named-checkconf
   when: bind9_config.changed
+  changed_when: false
 
 - name: Named is reloaded when changes made
   ansible.builtin.service:

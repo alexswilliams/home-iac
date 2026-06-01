@@ -86,6 +86,7 @@ table ip router {
 
   chain from-work-rules {
     oif $IF_MONITORING ip daddr 192.168.6.10 tcp dport { 3000, 9090 } accept;
+    oif $IF_MAIN ip daddr 192.168.2.10 tcp dport { 22 } accept;
     oif $IF_EXTERNAL counter accept;
     drop;
   }
