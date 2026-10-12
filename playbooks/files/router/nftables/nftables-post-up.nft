@@ -99,6 +99,9 @@ table ip router {
 
   chain from-iot-rules {
     oif $IF_EXTERNAL accept;
+    oif $IF_MONITORING ip daddr 192.168.6.10 tcp dport { 5580 } accept comment "Matter";
+    oif $IF_MONITORING ip daddr 192.168.6.10 ip saddr { 192.168.5.200, 192.168.5.201, 192.168.5.202}
+        tcp dport { 8123 } accept comment "HA from Phones";
     drop;
   }
 

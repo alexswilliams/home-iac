@@ -12,4 +12,5 @@ $TTL 10m
 router-pi             IN  A     192.168.6.2
 monitoring-pi-4b      IN  A     192.168.6.10
 pompi                 IN  CNAME monitoring-pi-4b.monitoring.local.
-raspberry-pi-1b       IN  A     192.168.6.11
+monitoring-pi-4b-wifi IN  A     192.168.6.11
+raspberry-pi-1b       IN  A     192.168.6.12
