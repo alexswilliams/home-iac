@@ -1,0 +1,13 @@
+[Unit]
+Description=Docker Registry
+After=network.target
+
+[Service]
+Type=simple
+Environment="OTEL_TRACES_EXPORTER=none"
+ExecStart=/opt/registry/registry serve /etc/registry/config.yml
+Restart=always
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

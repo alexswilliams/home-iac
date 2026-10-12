@@ -1,0 +1,89 @@
+- name: Registry group exists
+  ansible.builtin.group:
+    name: "docker_registry"
+    state: present
+    system: true
+- name: Registry user exists
+  ansible.builtin.user:
+    state: present
+    name: "docker_registry"
+    create_home: false
+    home: "/var/lib/registry"
+    shell: /usr/bin/false
+    group: "docker_registry"
+    groups: ""
+    password: "!"
+    password_lock: true
+    system: true
+
+
+- name: Registry Directories Exist
+  ansible.builtin.file:
+    path: "{{ item.dir }}"
+    state: "directory"
+    mode: "{{ item.mode }}"
+    owner: "docker_registry"
+    group: "docker_registry"
+    access_time: preserve
+  with_items:
+    - { "dir": "/opt/registry", mode: "0555" }
+    - { "dir": "/etc/registry", mode: "0555" }
+    - { "dir": "/var/lib/registry", mode: "0770" }
+- name: Registry Tarball
+  ansible.builtin.get_url:
+    url: "https://github.com/distribution/distribution/releases/download/v3.1.2/registry_3.1.2_linux_arm64.tar.gz"
+    decompress: true
+    dest: "/opt/registry/"
+    mode: "0755"
+    checksum: "sha256:09d26f88d2c0f161bd1b8bfc6c123571cc3d291dcca8af5477b3cacc4ec95e73"
+  register: download_registry_tarball
+- name: Clean Registry Binary on new download
+  ansible.builtin.file:
+    path: "/opt/registry/registry"
+    state: "absent"
+  when: download_registry_tarball.changed
+- name: Registry Binary
+  ansible.builtin.unarchive:
+    creates: "/opt/registry/registry"
+    remote_src: true
+    src: "/opt/registry/registry_3.1.2_linux_arm64.tar.gz"
+    dest: "/opt/registry/"
+    include: [ "registry" ]
+    owner: root
+    group: root
+    mode: "0555"
+
+- name: Registry config
+  ansible.builtin.copy:
+    src: files/router/registry/config.yml
+    dest: /etc/registry/config.yml
+    group: root
+    owner: root
+    mode: "0644"
+  register: registry_config
+
+
+- name: Registry custom systemd unit
+  ansible.builtin.copy:
+    src: files/router/registry/registry.service
+    dest: /lib/systemd/system/registry.service
+    group: root
+    owner: root
+    mode: "0644"
+  register: registry_systemd_unit
+- name: Reload systemd on registry changes
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+  when: registry_systemd_unit.changed
+- name: Registry custom units enabled on boot
+  ansible.builtin.service:
+    name: "{{ item }}"
+    enabled: true
+  with_items:
+    - registry.service
+
+- name: Apply registry config
+  ansible.builtin.service:
+    name: registry
+    state: restarted
+  when: registry_config.changed or registry_systemd_unit.changed or download_registry_tarball.changed
