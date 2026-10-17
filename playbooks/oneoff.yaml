@@ -4,7 +4,7 @@
   tasks:
     - name: "Firewall"
       ansible.builtin.include_tasks: ./tasklists/router/firewall.yaml
-    - name: "DHCP"
-      ansible.builtin.include_tasks: ./tasklists/router/dhcp.yaml
-    - name: "DNS"
-      ansible.builtin.include_tasks: ./tasklists/router/dns.yaml
+#    - name: "DHCP"
+#      ansible.builtin.include_tasks: ./tasklists/router/dhcp.yaml
+#    - name: "DNS"
+#      ansible.builtin.include_tasks: ./tasklists/router/dns.yaml
