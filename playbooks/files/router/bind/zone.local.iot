@@ -10,10 +10,15 @@ $TTL 10m
   IN NS router-pi.iot.local.
 
 router-pi             IN  A     192.168.5.2
-monitoring-pi-4b      IN  A     192.168.5.3
-pompi                 IN  CNAME monitoring-pi-4b.iot.local.
 
-garmin-vivoactive     IN  A     192.168.5.10
+access-point-700v2    IN  A     192.168.5.5
+
+monitoring-pi-4b      IN  A     192.168.5.10
+pompi                 IN  CNAME monitoring-pi-4b.iot.local.
+homeassistant         IN  CNAME monitoring-pi-4b.iot.local.
+
+
+garmin-vivoactive     IN  A     192.168.5.30
 
 kl130b-living-room    IN  A     192.168.5.40
 kl130b-landing        IN  A     192.168.5.41

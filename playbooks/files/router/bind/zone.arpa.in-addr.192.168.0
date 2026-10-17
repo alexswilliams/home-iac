@@ -3,7 +3,7 @@ $TTL 10m
   2026011801  ; serial
   1m          ; secondary server refresh interval
   1m          ; secondary sever retry interval
-  365d        ; secondary server expire-on-split-brain duratoin
+  365d        ; secondary server expire-on-split-brain duration
   10          ; nxdomain cache time
 )
 
