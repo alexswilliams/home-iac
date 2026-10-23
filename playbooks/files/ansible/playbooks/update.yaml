@@ -24,4 +24,5 @@
     - name: Autoremove packages (APT)
       ansible.builtin.apt:
         autoremove: true
+        purge: true
       when: ansible_facts['os_family'] == 'Debian'

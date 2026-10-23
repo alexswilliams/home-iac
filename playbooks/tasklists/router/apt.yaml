@@ -1,0 +1,23 @@
+- name: Unneeded RasPi packages are uninstalled
+  register: raspi_spam
+  ansible.builtin.package:
+    name:
+      - rpicam-apps-lite
+      - rpi-cloud-init-mods
+      - rpi-keyboard-config
+      - rpi-swap
+      - systemd-zram-generator
+    state: absent
+
+- name: Remove dependencies that are no longer required
+  when: raspi_spam.changed
+  ansible.builtin.apt:
+    autoremove: true
+    purge: true
+
+- name: Mark netplan as explicitly installed
+  ansible.builtin.package:
+    name:
+      - netplan-generator
+    state: present
+

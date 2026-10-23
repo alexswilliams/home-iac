@@ -51,6 +51,8 @@
   hosts: "router"
   become: true
   tasks:
+    - name: "Apt"
+      ansible.builtin.include_tasks: ./tasklists/router/apt.yaml
     - name: "Network Config"
       ansible.builtin.include_tasks: ./tasklists/router/netplan.yaml
     - name: "Firewall"
