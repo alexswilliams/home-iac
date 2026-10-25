@@ -61,3 +61,5 @@ c110-chimney-camera   IN  A     192.168.5.131
 pixel-4               IN  A     192.168.5.200
 pixel-6               IN  A     192.168.5.201
 pixel-8               IN  A     192.168.5.202
+
+tablet                IN  A     192.168.5.210
