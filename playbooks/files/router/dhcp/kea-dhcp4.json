@@ -76,7 +76,7 @@
             "ip-address": "192.168.0.2"
           },
           {
-            "hostname": "top-switch-gs308e",
+            "hostname": "top-switch-gs308ev4",
             "hw-address": "28:94:01:7b:61:f8",
             "ip-address": "192.168.0.10"
           },
@@ -112,7 +112,7 @@
             "space": "dhcp4",
             "name": "domain-search",
             "code": 119,
-            "data": "main.local, management.local, work.local, media.local, iot.local, monitoring.local, guest.local"
+            "data": "main.local, management.local, work.local, media.local, iot.local, monitoring.local, guest.local, local"
           },
           {
             "space": "dhcp4",
@@ -186,7 +186,7 @@
             "space": "dhcp4",
             "name": "domain-search",
             "code": 119,
-            "data": "work.local"
+            "data": "work.local, monitoring.local"
           },
           {
             "space": "dhcp4",
@@ -353,9 +353,19 @@
             "ip-address": "192.168.5.2"
           },
           {
+            "hostname": "access-point-700v2",
+            "hw-address": "00:50:7f:fb:80:90",
+            "ip-address": "192.168.5.5"
+          },
+          {
+            "hostname": "monitoring-pi-4b",
+            "hw-address": "dc:a6:32:45:5f:f0",
+            "ip-address": "192.168.5.10"
+          },
+          {
             "hostname": "garmin-vivoactive",
             "hw-address": "10:4e:89:df:a7:df",
-            "ip-address": "192.168.5.10"
+            "ip-address": "192.168.5.30"
           },
           {
             "hostname": "kl130b-living-room",
@@ -518,9 +528,14 @@
             "ip-address": "192.168.5.130"
           },
           {
-            "hostname": "c110-chimney-camera",
+            "hostname": "c110-rear-camera",
             "hw-address": "60:83:e7:96:e2:65",
             "ip-address": "192.168.5.131"
+          },
+          {
+            "hostname": "sonoff-tbr",
+            "hw-address": "c0:cd:d6:79:d2:db",
+            "ip-address": "192.168.5.190"
           },
           {
             "hostname": "pixel-4",
@@ -536,6 +551,11 @@
             "hostname": "pixel-8",
             "hw-address": "d4:3a:2c:5f:2b:91",
             "ip-address": "192.168.5.202"
+          },
+          {
+            "hostname": "tablet",
+            "hw-address": "b8:08:d7:e2:06:fa",
+            "ip-address": "192.168.5.210"
           }
         ]
       },
@@ -587,9 +607,14 @@
             "ip-address": "192.168.6.10"
           },
           {
+            "hostname": "monitoring-pi-4b",
+            "hw-address": "dc:a6:32:45:5f:f1",
+            "ip-address": "192.168.6.11"
+          },
+          {
             "hostname": "raspberry-pi-1b",
             "hw-address": "b8:27:eb:0f:20:73",
-            "ip-address": "192.168.6.11"
+            "ip-address": "192.168.6.12"
           }
         ]
       },

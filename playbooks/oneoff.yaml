@@ -2,5 +2,7 @@
   hosts: "router"
   become: true
   tasks:
-    - name: "Netplan"
-      ansible.builtin.include_tasks: ./tasklists/router/netplan.yaml
+    - name: "DHCP"
+      ansible.builtin.include_tasks: ./tasklists/router/dhcp.yaml
+    - name: "DNS"
+      ansible.builtin.include_tasks: ./tasklists/router/dns.yaml

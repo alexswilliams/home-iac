@@ -58,6 +58,8 @@ google-hub-bedroom    IN  A     192.168.5.114
 c110-front-camera     IN  A     192.168.5.130
 c110-chimney-camera   IN  A     192.168.5.131
 
+sonoff-tbr            IN  A     192.168.5.190
+
 pixel-4               IN  A     192.168.5.200
 pixel-6               IN  A     192.168.5.201
 pixel-8               IN  A     192.168.5.202
