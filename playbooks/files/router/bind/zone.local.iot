@@ -48,6 +48,7 @@ radiator-wifi         IN  A     192.168.5.90
 hive-hub              IN  A     192.168.5.91
 trmnl                 IN  A     192.168.5.92
 withings-scales       IN  A     192.168.5.93
+bindicator            IN  A     192.168.5.94
 
 google-home-front-bedroom IN A  192.168.5.110
 google-home-kitchen   IN  A     192.168.5.111

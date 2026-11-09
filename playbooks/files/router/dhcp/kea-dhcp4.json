@@ -498,6 +498,11 @@
             "ip-address": "192.168.5.93"
           },
           {
+            "hostname": "bindicator",
+            "hw-address": "30:76:f5:b8:fb:90",
+            "ip-address": "192.168.5.94"
+          },
+          {
             "hostname": "google-home-front-bedroom",
             "hw-address": "3c:8d:20:2e:a4:be",
             "ip-address": "192.168.5.110"
